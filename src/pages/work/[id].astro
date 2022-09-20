@@ -1,0 +1,122 @@
+---
+import { getCharacter, getCharacters } from "../../api";
+import Layout from "../../layouts/Layout.astro";
+
+const { id } = Astro.params;
+const title = `work ${id}`;
+
+const character = await getCharacter(id);
+
+function statusCharacter(str: string) {
+    const status: any = {
+        Alive: {
+            class: "status alive",
+            text: "Alive",
+        },
+        Dead: {
+            class: "status dead",
+            text: "Dead",
+        },
+        unknown: {
+            class: "status unknown",
+            text: "Unknown",
+        },
+    };
+
+    return status[str];
+}
+
+const { class: classStatus, text: textStatus } = statusCharacter(
+    character.status
+);
+
+export async function getStaticPaths() {
+    const characters = await getCharacters();
+
+    return characters.map(({ id }: any) => {
+        return {
+            params: {
+                id: id.toString(),
+            },
+        };
+    });
+}
+---
+
+<Layout title={title}>
+    <main>
+        <h1>Welcome to <span class="text-gradient">{character.name}</span></h1>
+
+        <div class="content_character">
+            <img src={character.image} alt={character.name} />
+
+            <div class="aux">
+                <p>
+                    <span class="text-gradient">Status:</span>
+                    <span> <span class={classStatus}></span> {textStatus}</span>
+                </p>
+                <p>
+                    <span class="text-gradient">Species:</span>
+                    {character.species}
+                </p>
+                <p>
+                    <span class="text-gradient">Gender:</span>
+                    {character.gender}
+                </p>
+                <p>
+                    <span class="text-gradient">Number episodies:</span>
+                    {character.episode.length}
+                </p>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    h1 {
+        margin: 2rem 0;
+    }
+
+    main {
+        margin: auto;
+        padding: 1em;
+        max-width: 60ch;
+    }
+
+    img {
+        width: 100%;
+        display: block;
+    }
+
+    .content_character {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .aux {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .status {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+
+    .dead {
+        background: rgb(214, 61, 46);
+    }
+
+    .alive {
+        background: rgb(85, 204, 68);
+    }
+
+    .unknown {
+        background: rgb(158, 158, 158);
+    }
+</style>
