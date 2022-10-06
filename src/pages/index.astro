@@ -1,37 +1,49 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
+
+const dataCards = [
+    {
+        id: 0,
+        href: "https://docs.astro.build/",
+        tile: "Documentation",
+        body: "Learn how Astro works and explore the official API docs.",
+    },
+    {
+        id: 1,
+        href: "https://astro.build/integrations/",
+        tile: "Integrations",
+        body: "Supercharge your project with new frameworks and libraries.",
+    },
+    {
+        id: 2,
+        href: "https://astro.build/themes/",
+        tile: "Themes",
+        body: "Explore a galaxy of community-built starter themes.",
+    },
+    {
+        id: 3,
+        href: "https://astro.build/chat/",
+        tile: "Chat",
+        body: "Come say hi to our amazing Discord community. ❤️",
+    },
+];
 ---
 
 <Layout title="Home">
     <main>
-        <h1>Welcome to <span class="text-gradient">Astro</span></h1>
+        <h1>Welcome to <span class="text-gradient">my website</span></h1>
         <p class="instructions">
             Check out the <code>src/pages</code> directory to get started.<br />
             <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message
             above.
         </p>
         <ul role="list" class="link-card-grid">
-            <Card
-                href="https://docs.astro.build/"
-                title="Documentation"
-                body="Learn how Astro works and explore the official API docs."
-            />
-            <Card
-                href="https://astro.build/integrations/"
-                title="Integrations"
-                body="Supercharge your project with new frameworks and libraries."
-            />
-            <Card
-                href="https://astro.build/themes/"
-                title="Themes"
-                body="Explore a galaxy of community-built starter themes."
-            />
-            <Card
-                href="https://astro.build/chat/"
-                title="Chat"
-                body="Come say hi to our amazing Discord community. ❤️"
-            />
+            {
+                dataCards.map((data) => (
+                    <Card href={data.href} title={data.tile} body={data.body} />
+                ))
+            }
         </ul>
     </main>
 </Layout>

@@ -1,0 +1,33 @@
+.menu .link {
+    padding: 0.2rem 0.2rem;
+    position: relative;
+
+    overflow: hidden;
+}
+
+.menu .link .gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    transform: translateX(-200%);
+    transition: transform 0.5s;
+
+    background-image: var(--astro-gradient);
+    background-size: 100% 200%;
+    background-position-x: 100%;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+.menu .link:hover .gradient,
+.menu .link.active_link .gradient {
+    transform: translateX(0);
+}
+
+.menu .link:hover a,
+.menu .link.active_link a {
+    background-image: var(--astro-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

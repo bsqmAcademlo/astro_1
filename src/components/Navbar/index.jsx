@@ -1,7 +1,36 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Link } from "../Link";
 import "./styles.css";
 
-export const Navbar = () => {
+const dataLink = [
+    {
+        id: 0,
+        href: "/",
+        text: "home",
+    },
+    {
+        id: 1,
+        href: "/about/",
+        text: "about",
+    },
+    {
+        id: 2,
+        href: "/portfolio/",
+        text: "portfolio",
+    },
+    {
+        id: 3,
+        href: "/work/",
+        text: "work",
+    },
+    {
+        id: 4,
+        href: "/contact/",
+        text: "contact",
+    },
+];
+
+export default function Navbar({ pathname }) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleClick = () => {
@@ -18,29 +47,12 @@ export const Navbar = () => {
             </span>
 
             <ul className={classMenu}>
-                <li>
-                    <a href="/">home</a>
-                    <span className="gradient"></span>
-                </li>
-                <li>
-                    <a href="/about/">about</a>
-                    <span className="gradient"></span>
-                </li>
-                <li>
-                    <a href="/portfolio/">portfolio</a>
-                    <span className="gradient"></span>
-                </li>
-                <li>
-                    <a href="/work/">work</a>
-                    <span className="gradient"></span>
-                </li>
-                <li>
-                    <a href="/contact/">contact</a>
-                    <span className="gradient"></span>
-                </li>
+                {dataLink.map(({ href, id, text }) => (
+                    <Link key={id} href={href} text={text} path={pathname} />
+                ))}
             </ul>
 
             <i className={typeIcon} onClick={handleClick}></i>
         </nav>
     );
-};
+}
